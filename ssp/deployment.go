@@ -3,7 +3,6 @@ package ssp
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"github.com/google/go-querystring/query"
 	"github.com/google/jsonapi"
@@ -129,7 +128,7 @@ func (a *Client) ListDeployments(sID string, eID string, filter *DeploymentFilte
 
 	data, err := jsonapi.UnmarshalManyPayload(r, reflect.TypeOf(new(Deployment)))
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf("Failed unmarshaling deployments: '%s'", err))
+		return nil, fmt.Errorf("failed unmarshaling deployments: '%s'", err)
 	}
 
 	deployments := make([]*Deployment, len(data))
@@ -137,7 +136,7 @@ func (a *Client) ListDeployments(sID string, eID string, filter *DeploymentFilte
 		deployments[i] = deployment.(*Deployment)
 		err = postProcessDeployment(deployments[i])
 		if err != nil {
-			return nil, errors.New(fmt.Sprintf("Failed post-processing deployments: '%s'", err))
+			return nil, fmt.Errorf("failed post-processing deployments: '%s'", err)
 		}
 	}
 
@@ -154,7 +153,7 @@ func (a *Client) GetDeployment(sID string, eID string, dID string) (*Deployment,
 
 	d, unmarshalErr := responseToDeployment(resp)
 	if unmarshalErr != nil {
-		return nil, errors.New(fmt.Sprintf("Failed unmarshaling deployment: '%s'", unmarshalErr))
+		return nil, fmt.Errorf("failed unmarshaling deployment: '%s'", unmarshalErr)
 	}
 
 	return d, nil
@@ -175,7 +174,7 @@ func (a *Client) CreateDeployment(sID string, eID string, cd *CreateDeployment) 
 
 	d, unmarshalErr := responseToDeployment(resp)
 	if unmarshalErr != nil {
-		return nil, errors.New(fmt.Sprintf("Failed unmarshaling deployment: '%s'", unmarshalErr))
+		return nil, fmt.Errorf("failed unmarshaling deployment: '%s'", unmarshalErr)
 	}
 
 	return d, nil
@@ -196,7 +195,7 @@ func (a *Client) ApproveDeployment(sID string, eID string, ad *ApproveDeployment
 
 	d, unmarshalErr := responseToDeployment(resp)
 	if unmarshalErr != nil {
-		return nil, errors.New(fmt.Sprintf("Failed unmarshaling deployment: '%s'", unmarshalErr))
+		return nil, fmt.Errorf("failed unmarshaling deployment: '%s'", unmarshalErr)
 	}
 
 	return d, nil
@@ -217,7 +216,7 @@ func (a *Client) StartDeployment(sID string, eID string, sd *StartDeployment) (*
 
 	d, unmarshalErr := responseToDeployment(resp)
 	if unmarshalErr != nil {
-		return nil, errors.New(fmt.Sprintf("Failed unmarshaling deployment: '%s'", unmarshalErr))
+		return nil, fmt.Errorf("failed unmarshaling deployment: '%s'", unmarshalErr)
 	}
 
 	return d, nil
@@ -238,7 +237,7 @@ func (a *Client) InvalidateDeployment(sID string, eID string, id *InvalidateDepl
 
 	d, unmarshalErr := responseToDeployment(resp)
 	if unmarshalErr != nil {
-		return nil, errors.New(fmt.Sprintf("Failed unmarshaling deployment: '%s'", unmarshalErr))
+		return nil, fmt.Errorf("failed unmarshaling deployment: '%s'", unmarshalErr)
 	}
 
 	return d, nil
