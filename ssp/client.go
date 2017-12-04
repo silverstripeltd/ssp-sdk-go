@@ -1,3 +1,18 @@
+// Package ssp provides an SDK-style library for connecting with the Platform Dashboard.
+//
+// Quick start
+//
+// Obtain access token from the Platform Dashboard by going to your profile (naut/profile).
+// Then create $HOME/.dashboard.env` file with the following configuration:
+//
+// 	DASHBOARD_URL=https://platform.silverstripe.com
+// 	DASHBOARD_EMAIL=roger@over.nz
+// 	DASHBOARD_TOKEN=bd290208870ea48fa7dabaf80842c94e7d175f7c
+//
+// Then use the default config:
+//
+// 	ssp, _ := ssp.NewClient(nil)
+// 	env, _ := ssp.GetEnvironment("mystack", "myenv")
 package ssp
 
 import (
@@ -13,12 +28,18 @@ import (
 	"time"
 )
 
+// Client exposes all available SDK calls.
+//
+// By convention, when calling the SDK, API URL parameters are passed as function arguments.
+// API requests with a body requirepassing a specialised structure - for example `ssp.CreateDeployment(...)`
+// call requires `CreateDeployment` structure as its last argument.
 type Client struct {
 	Config  *Config
 	baseURL *url.URL
 	client  *http.Client
 }
 
+// ErrorResponse represents a standard JSON API error message, which can embed multiple errors.
 type ErrorResponse struct {
 	Errors []struct {
 		Status string `json:"status"`
@@ -34,6 +55,7 @@ func (er *ErrorResponse) String() string {
 	return strings.Join(messages, ", ")
 }
 
+// NewClient creates a default SDK client. Pass nil as c to use default configuration.
 func NewClient(c *Config) (*Client, error) {
 	if c == nil {
 		c = NewDefaultConfig()
