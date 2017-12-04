@@ -4,7 +4,8 @@ import (
 	"net/http"
 )
 
-// Based on github.com/google/go-github
+// BasicAuthTransport is a RoundTripper that injects BasicAuth credentials. It's based on a similar RoundTripper
+// found in the github.com/google/go-github package.
 type BasicAuthTransport struct {
 	Username  string
 	Password  string
