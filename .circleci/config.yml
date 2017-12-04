@@ -1,0 +1,36 @@
+# Golang CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.9
+    working_directory: /go/src/github.com/silverstripeltd/ssp-sdk-go
+    environment:
+      TEST_RESULTS: /tmp/test-results
+    steps:
+      - checkout
+      - run: mkdir -p $TEST_RESULTS
+      - run: go get -u github.com/golang/dep/cmd/dep
+      - run: go get github.com/jstemmer/go-junit-report
+      - run: go get github.com/mattn/goveralls
+      - run: dep ensure
+      - run:
+          name: Run unit tests
+          command: |
+            trap "go-junit-report <${TEST_RESULTS}/go-test.out > ${TEST_RESULTS}/go-test-report.xml" EXIT
+            ./test-all.sh | tee ${TEST_RESULTS}/go-test.out
+      - run:
+          name: coveralls.io
+          command: |
+            if [ -z ${COVERALLS_TOKEN} ]; then
+              echo "coveralls.io token is not set, skipping"
+            else
+              goveralls -coverprofile=./coverage.out -service=circle-ci -repotoken=$COVERALLS_TOKEN
+            fi
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: raw-test-output
+      - store_test_results:
+          path: /tmp/test-results
