@@ -22,8 +22,12 @@ func ExampleClient() {
 		fmt.Printf("%s", err)
 		os.Exit(1)
 	}
-
 	fmt.Printf("Just fetched environment %s", env.Name)
+
+	d, _ := ssp.ApproveDeployment("mystack", "myenv", &ApproveDeployment{
+		ID: 123,
+	})
+	fmt.Printf("Approved deployment %s", d.ID)
 }
 
 func TestNewApi(t *testing.T) {

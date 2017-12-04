@@ -3,7 +3,7 @@
 // Quick start
 //
 // Obtain access token from the Platform Dashboard by going to your profile (naut/profile).
-// Then create $HOME/.dashboard.env` file with the following configuration:
+// Then create $HOME/.dashboard.env file with the following configuration:
 //
 // 	DASHBOARD_URL=https://platform.silverstripe.com
 // 	DASHBOARD_EMAIL=roger@over.nz
@@ -31,8 +31,8 @@ import (
 // Client exposes all available SDK calls.
 //
 // By convention, when calling the SDK, API URL parameters are passed as function arguments.
-// API requests with a body requirepassing a specialised structure - for example `ssp.CreateDeployment(...)`
-// call requires `CreateDeployment` structure as its last argument.
+// API requests with a body require passing a specialised structure - for example ssp.CreateDeployment(...)
+// call requires CreateDeployment structure as its last argument.
 type Client struct {
 	Config  *Config
 	baseURL *url.URL
