@@ -1,7 +1,6 @@
 package ssp
 
 import (
-	"errors"
 	"fmt"
 	"github.com/google/jsonapi"
 	"reflect"
@@ -25,7 +24,7 @@ func (a *Client) ListStacks() ([]*Stack, error) {
 
 	items, err := jsonapi.UnmarshalManyPayload(r, reflect.TypeOf(new(Stack)))
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf("Failed unmarshaling stacks: '%s'", err))
+		return nil, fmt.Errorf("failed unmarshaling stacks: '%s'", err)
 	}
 
 	stacks := make([]*Stack, len(items))

@@ -1,7 +1,6 @@
 package ssp
 
 import (
-	"errors"
 	"fmt"
 	"github.com/blang/semver"
 	"github.com/google/jsonapi"
@@ -52,7 +51,7 @@ func (a *Client) GetEnvironment(sID string, eID string) (*Environment, error) {
 	env := new(Environment)
 	err = jsonapi.UnmarshalPayload(r, env)
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf("Failed unmarshaling environment: '%s'", err))
+		return nil, fmt.Errorf("failed unmarshaling environment: '%s'", err)
 	}
 
 	var days = map[string]time.Weekday{
