@@ -12,13 +12,13 @@ import (
 func ExampleClient() {
 	// Default client uses either the $HOME/.dashboard.env, or environment variable overrides.
 	ssp, err := NewClient(nil)
-	if err!=nil {
+	if err != nil {
 		fmt.Printf("%s", err)
 		os.Exit(1)
 	}
 
 	env, _ := ssp.GetEnvironment("mystack", "myenv")
-	if err!=nil {
+	if err != nil {
 		fmt.Printf("%s", err)
 		os.Exit(1)
 	}
