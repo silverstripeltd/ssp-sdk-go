@@ -18,7 +18,7 @@ func TestListDeployments(t *testing.T) {
 		t.Errorf("%s", err)
 	}
 
-	for i, _ := range in {
+	for i := range in {
 		if in[i].ID != out[i].ID {
 			t.Error("Data returned is not matching the data sent")
 		}
