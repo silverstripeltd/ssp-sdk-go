@@ -254,7 +254,7 @@ func (a *Client) DeleteDeployment(sID string, eID string, dID int) error {
 	return nil
 }
 
-func responseToDeployment(r io.ReadCloser) (*Deployment, error) {
+func responseToDeployment(r io.Reader) (*Deployment, error) {
 	d := &Deployment{}
 	err := jsonapi.UnmarshalPayload(r, d)
 	if err != nil {
