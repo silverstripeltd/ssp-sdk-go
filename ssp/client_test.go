@@ -1,24 +1,24 @@
 package ssp
 
 import (
+	"fmt"
 	"github.com/google/jsonapi"
 	"net/http"
 	"net/http/httptest"
-	"testing"
-	"fmt"
 	"os"
+	"testing"
 )
 
 func ExampleClient() {
 	// Default client uses either the $HOME/.dashboard.env, or environment variable overrides.
 	ssp, err := NewClient(nil)
-	if err!=nil {
+	if err != nil {
 		fmt.Printf("%s", err)
 		os.Exit(1)
 	}
 
 	env, _ := ssp.GetEnvironment("mystack", "myenv")
-	if err!=nil {
+	if err != nil {
 		fmt.Printf("%s", err)
 		os.Exit(1)
 	}
@@ -27,7 +27,7 @@ func ExampleClient() {
 	d, _ := ssp.ApproveDeployment("mystack", "myenv", &ApproveDeployment{
 		ID: 123,
 	})
-	fmt.Printf("Approved deployment %s", d.ID)
+	fmt.Printf("Approved deployment %d", d.ID)
 }
 
 func TestNewApi(t *testing.T) {
