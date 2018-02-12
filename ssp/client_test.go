@@ -1,12 +1,12 @@
 package ssp
 
 import (
+	"fmt"
 	"github.com/google/jsonapi"
 	"net/http"
 	"net/http/httptest"
-	"testing"
-	"fmt"
 	"os"
+	"testing"
 )
 
 func ExampleClient() {

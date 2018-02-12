@@ -17,6 +17,11 @@ const (
 	ForceFullOption          = "force_full"
 )
 
+const (
+	DeploymentTypeFull     = "full"
+	DeploymentTypeCodeOnly = "code-only"
+)
+
 type State string
 
 const (
@@ -34,13 +39,13 @@ const (
 )
 
 type DeploymentFilter struct {
-	State          State  `url:"state"`
-	ScheduleStart  int64  `url:"schedule_start_unix"`
-	ScheduleEnd    int64  `url:"schedule_end_unix"`
-	LastEditedFrom int64  `url:"lastedited_from_unix"`
-	DeployerEmail  string `url:"deployer_email"`
-	Title          string `url:"title"`
-	Summary        string `url:"summary"`
+	State           State  `url:"state"`
+	LastEditedFrom  int64  `url:"lastedited_from_unix"`
+	DateStartedFrom int64  `url:"datestarted_from_unix"`
+	DateStartedTo   int64  `url:"datestarted_to_unix"`
+	DeployerEmail   string `url:"deployer_email"`
+	Title           string `url:"title"`
+	Summary         string `url:"summary"`
 }
 
 type Deployment struct {
