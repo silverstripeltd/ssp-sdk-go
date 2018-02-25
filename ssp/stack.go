@@ -13,6 +13,7 @@ type Stack struct {
 	Title        string         `jsonapi:"attr,title"`
 	Created      time.Time      `jsonapi:"attr,created_unix"`
 	Environments []*Environment `jsonapi:"relation,environments"`
+	BaseStack    *Stack         `jsonapi:"relation,base_stack"`
 }
 
 func (a *Client) ListStacks() ([]*Stack, error) {
