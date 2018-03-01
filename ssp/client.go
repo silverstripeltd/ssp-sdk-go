@@ -137,7 +137,7 @@ func (a *Client) request(method string, path string, body io.Reader) (*http.Resp
 		fmt.Printf("%s", dump)
 	}
 
-	if resp.Header.Get("Content-Type") != "application/vnd.api+json" {
+	if resp.StatusCode != 204 && resp.Header.Get("Content-Type") != "application/vnd.api+json" {
 		return nil, fmt.Errorf("Unexpected Content-Type: '%s'", resp.Header.Get("Content-Type"))
 	}
 
