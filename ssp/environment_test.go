@@ -46,6 +46,18 @@ func TestGetEnvironment(t *testing.T) {
 	}
 }
 
+func TestUpdateInstanceType(t *testing.T) {
+	api, ts := newMockDashboard(&Environment{}, http.StatusOK)
+	defer ts.Close()
+	s := &UpdateInstanceType{
+		InstanceType: "t2.nano",
+	}
+	err := api.UpdateInstanceType("one", "prod", s)
+	if err != nil {
+		t.Errorf("%s", err)
+	}
+}
+
 func TestGetEnvironmentUnspecifiedMaintenance(t *testing.T) {
 	in := &Environment{
 		ID: "one",
