@@ -1,10 +1,13 @@
 package ssp
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"time"
+
 	"github.com/blang/semver"
 	"github.com/google/jsonapi"
-	"time"
 )
 
 type Usage string
@@ -38,6 +41,26 @@ type Environment struct {
 	OriginalMaintenanceTz       string `jsonapi:"attr,maintenance_tz"`
 	OriginalDesiredManifestSha  string `jsonapi:"attr,desired_manifest_sha"`
 	OriginalCurrentManifestSha  string `jsonapi:"attr,current_manifest_sha"`
+}
+
+type UpdateInstanceType struct {
+	InstanceType string `json:"instanceType"`
+}
+
+func (a *Client) UpdateInstanceType(sID string, eID string, updateData *UpdateInstanceType) error {
+	req, err := json.Marshal(updateData)
+	if err != nil {
+		return err
+	}
+
+	url := fmt.Sprintf("naut/project/%s/environment/%s/sspattributes", sID, eID)
+	r, err := a.post(url, bytes.NewReader(req))
+	if err != nil {
+		return err
+	}
+	defer r.Close()
+
+	return nil
 }
 
 func (a *Client) GetEnvironment(sID string, eID string) (*Environment, error) {
