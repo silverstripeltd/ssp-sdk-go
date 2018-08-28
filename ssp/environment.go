@@ -53,7 +53,7 @@ func (a *Client) UpdateInstanceType(sID string, eID string, updateData *UpdateIn
 		return err
 	}
 
-	url := fmt.Sprintf("naut/project/%s/environment/%s/updateenv", sID, eID)
+	url := fmt.Sprintf("naut/project/%s/environment/%s/update/ec2type", sID, eID)
 	r, err := a.post(url, bytes.NewReader(req))
 	if err != nil {
 		return err
