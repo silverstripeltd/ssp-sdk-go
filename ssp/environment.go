@@ -34,6 +34,7 @@ type Environment struct {
 	Stack                       *Stack       `jsonapi:"relation,stack"`
 	BaseEnvironment             *Environment `jsonapi:"relation,base_environment"`
 	Usage                       Usage
+	PHPVersion                  string `jsonapi:"attr,php_version"`
 	OriginalUsage               string `jsonapi:"attr,usage"`
 	OriginalMaintenanceDay      string `jsonapi:"attr,maintenance_day"`
 	OriginalMaintenanceTime     string `jsonapi:"attr,maintenance_time"`

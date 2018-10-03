@@ -15,13 +15,14 @@ func TestGetEnvironment(t *testing.T) {
 		OriginalMaintenanceDuration: "2:34",
 		OriginalCurrentManifestSha:  "1.2.3",
 		OriginalDesiredManifestSha:  "2.3.0",
+		PHPVersion:                  "5.6",
 	}
 	api, ts := newMockDashboard(in, http.StatusOK)
 	defer ts.Close()
 
 	out, err := api.GetEnvironment("one", "prod")
 	if err != nil {
-		t.Errorf("%s", err)
+		t.Fatalf("%s", err)
 	}
 	if out.ID != "one" {
 		t.Error("ID parsed incorrectly")
@@ -43,6 +44,9 @@ func TestGetEnvironment(t *testing.T) {
 	}
 	if out.DesiredManifestSha.String() != "2.3.0" {
 		t.Error("DesiredManifestSha parsed incorrectly")
+	}
+	if out.PHPVersion != in.PHPVersion {
+		t.Errorf("PHPVersion parsed incorrectly, expected '%s', got '%s'", in.PHPVersion, out.PHPVersion)
 	}
 }
 
@@ -70,7 +74,7 @@ func TestGetEnvironmentUnspecifiedMaintenance(t *testing.T) {
 
 	out, err := api.GetEnvironment("one", "prod")
 	if err != nil {
-		t.Errorf("%s", err)
+		t.Fatalf("%s", err)
 	}
 	if !out.MaintenanceUnspecified {
 		t.Error("Maintenance should be unspecified")
