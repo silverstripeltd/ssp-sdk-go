@@ -17,6 +17,7 @@ func TestGetEnvironment(t *testing.T) {
 		OriginalDesiredManifestSha:  "2.3.0",
 		PHPVersion:                  "5.6",
 		BuildPackage:                "https://example.invaid/my/package.tgz",
+		InstanceType:                "t2.small",
 	}
 	api, ts := newMockDashboard(in, http.StatusOK)
 	defer ts.Close()
@@ -51,6 +52,9 @@ func TestGetEnvironment(t *testing.T) {
 	}
 	if out.BuildPackage != in.BuildPackage {
 		t.Errorf("BuildPackage parsed incorrectly, expected '%s', got '%s'", in.BuildPackage, out.BuildPackage)
+	}
+	if out.InstanceType != in.InstanceType {
+		t.Errorf("InstanceType parsed incorrectly, expected '%s', got '%s'", in.InstanceType, out.InstanceType)
 	}
 }
 
