@@ -23,6 +23,7 @@ type Environment struct {
 	ID                     string `jsonapi:"primary,environments"`
 	Name                   string `jsonapi:"attr,name"`
 	BuildSHA               string `jsonapi:"attr,build_sha"`
+	BuildPackage           string `jsonapi:"attr,build_package"`
 	MaintenanceDay         time.Weekday
 	MaintenanceUnspecified bool
 	MaintenanceTime        time.Time
@@ -35,6 +36,7 @@ type Environment struct {
 	BaseEnvironment             *Environment `jsonapi:"relation,base_environment"`
 	Usage                       Usage
 	PHPVersion                  string `jsonapi:"attr,php_version"`
+	InstanceType                string `jsonapi:"attr,instance_type"`
 	OriginalUsage               string `jsonapi:"attr,usage"`
 	OriginalMaintenanceDay      string `jsonapi:"attr,maintenance_day"`
 	OriginalMaintenanceTime     string `jsonapi:"attr,maintenance_time"`

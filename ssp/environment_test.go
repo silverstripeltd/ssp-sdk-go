@@ -16,6 +16,7 @@ func TestGetEnvironment(t *testing.T) {
 		OriginalCurrentManifestSha:  "1.2.3",
 		OriginalDesiredManifestSha:  "2.3.0",
 		PHPVersion:                  "5.6",
+		BuildPackage:                "https://example.invaid/my/package.tgz",
 	}
 	api, ts := newMockDashboard(in, http.StatusOK)
 	defer ts.Close()
@@ -47,6 +48,9 @@ func TestGetEnvironment(t *testing.T) {
 	}
 	if out.PHPVersion != in.PHPVersion {
 		t.Errorf("PHPVersion parsed incorrectly, expected '%s', got '%s'", in.PHPVersion, out.PHPVersion)
+	}
+	if out.BuildPackage != in.BuildPackage {
+		t.Errorf("BuildPackage parsed incorrectly, expected '%s', got '%s'", in.BuildPackage, out.BuildPackage)
 	}
 }
 
