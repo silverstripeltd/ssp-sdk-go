@@ -2,11 +2,12 @@ package ssp
 
 import (
 	"fmt"
-	"github.com/google/jsonapi"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"testing"
+
+	"github.com/google/jsonapi"
 )
 
 func ExampleClient() {
@@ -38,6 +39,21 @@ func TestNewApi(t *testing.T) {
 
 	if api.baseURL.Host != "localhost" {
 		t.Error("BaseURL not parsed correctly")
+	}
+}
+
+func TestRequestErrorMessage(t *testing.T) {
+	api, ts := newMockDashboard(nil, http.StatusBadGateway)
+	defer ts.Close()
+	_, err := api.request("GET", "/some/path", nil)
+	if err == nil {
+		t.Errorf("Expected error, got nil error")
+	}
+
+	actual := err.Error()
+	expected := fmt.Sprintf("GET /some/path | HTTP 502 - '502 Bad Gateway'")
+	if actual != expected {
+		t.Errorf("Expected message \"%s\", got \"%s\"", expected, actual)
 	}
 }
 
