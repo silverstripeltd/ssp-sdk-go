@@ -18,7 +18,6 @@ package ssp
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/google/jsonapi"
 	"io"
 	"net/http"
 	"net/http/httputil"
@@ -26,6 +25,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/google/jsonapi"
 )
 
 // Client exposes all available SDK calls.
@@ -126,9 +127,9 @@ func (a *Client) request(method string, path string, body io.Reader) (*http.Resp
 	if resp.StatusCode > 299 {
 		er := &ErrorResponse{}
 		if err := json.NewDecoder(resp.Body).Decode(er); err == nil {
-			return nil, fmt.Errorf("HTTP %d - '%s'", resp.StatusCode, er)
+			return nil, fmt.Errorf("%s %s | HTTP %d - '%s'", method, path, resp.StatusCode, er)
 		} else {
-			return nil, fmt.Errorf("HTTP %d - '%s'", resp.StatusCode, resp.Status)
+			return nil, fmt.Errorf("%s %s | HTTP %d - '%s'", method, path, resp.StatusCode, resp.Status)
 		}
 	}
 
