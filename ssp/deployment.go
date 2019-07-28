@@ -27,7 +27,7 @@ type State string
 const (
 	StateNew       = "New"
 	StateSubmitted = "Submitted"
-	StateInvalid   = "Invalid"
+	StateInvalid   = "Skipped"
 	StateApproved  = "Approved"
 	StateRejected  = "Rejected"
 	StateQueued    = "Queued"
@@ -293,7 +293,7 @@ func postProcessDeployment(d *Deployment) error {
 	var states = map[string]State{
 		"New":       StateNew,
 		"Submitted": StateSubmitted,
-		"Invalid":   StateInvalid,
+		"Skipped":   StateInvalid,
 		"Approved":  StateApproved,
 		"Rejected":  StateRejected,
 		"Queued":    StateQueued,
