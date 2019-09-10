@@ -13,8 +13,9 @@ import (
 )
 
 const (
-	IgnoreConfigChangeOption = "ignore_config_changes"
-	ForceFullOption          = "force_full"
+	UpgradeInfrastructureOption = "upgrade_infrastructure"
+	IgnoreConfigChangeOption    = "ignore_config_changes"
+	ForceFullOption             = "force_full"
 )
 
 const (
